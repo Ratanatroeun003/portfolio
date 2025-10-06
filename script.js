@@ -1,44 +1,21 @@
-// A simple typing effect script
-const typingTextElement = document.querySelector(".typing-text");
-const jobTitles = [
-  "Web Designer",
-  "Graphic Designer",
-  "UI/UX Designer",
-  "Front-end Developer",
-];
-let jobTitleIndex = 0;
+const phrases = ["I'M A WEB DEVELOPER"];
+const typedEl = document.getElementById("typed");
+const typingSpeed = 70;
 let charIndex = 0;
 
-function typeText() {
-  if (charIndex < jobTitles[jobTitleIndex].length) {
-    typingTextElement.textContent += jobTitles[jobTitleIndex].charAt(charIndex);
+function typeLoop() {
+  if (charIndex < phrases[0].length) {
+    typedEl.textContent += phrases[0].charAt(charIndex);
     charIndex++;
-    setTimeout(typeText, 100); // Speed of typing
-  } else {
-    setTimeout(deleteText, 2000); // Wait 2 seconds before deleting
+    setTimeout(typeLoop, typingSpeed);
   }
 }
+document.addEventListener("DOMContentLoaded", typeLoop);
 
-function deleteText() {
-  if (charIndex > 0) {
-    typingTextElement.textContent = jobTitles[jobTitleIndex].substring(
-      0,
-      charIndex - 1
-    );
-    charIndex--;
-    setTimeout(deleteText, 50); // Speed of deleting
-  } else {
-    jobTitleIndex++;
-    if (jobTitleIndex >= jobTitles.length) {
-      jobTitleIndex = 0;
-    }
-    setTimeout(typeText, 1000); // Wait 1 second before typing the next title
-  }
-}
-
-// Start the typing effect
-document.addEventListener("DOMContentLoaded", () => {
-  if (typingTextElement) {
-    setTimeout(typeText, 1000);
-  }
+AOS.init({
+  duration: 1200, // animation duration in ms
+  offset: 100, // trigger after scrolling 100px
+  easing: "ease-in-out",
+  once: false, // <-- this makes animation repeat when scrolling
+  mirror: true, // <-- animations also trigger when scrolling back up
 });
